@@ -1,7 +1,5 @@
 import socket
 import os
-import threading
-from _thread import *
 
 ServerSocket = socket.socket()
 host = '127.0.0.1'

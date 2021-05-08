@@ -12,10 +12,14 @@ except socket.error as e:
 
 Response = ClientSocket.recv(1024)
 print(Response.decode('utf-8'))
-Response = ClientSocket.recv(1024)
-print(Response.decode('utf-8'))
 while True:
-    Input = input('Say Something: ')
-    ClientSocket.send(str.encode(Input))
+    Response = ClientSocket.recv(1024)
+    print(Response.decode('utf-8'))
+    if Response.decode('utf-8') != 'you are the attacker':
+        Response = ClientSocket.recv(1024)
+        print(Response.decode('utf-8'))
+    else:
+        Input = input('Say Something: ')
+        ClientSocket.send(str.encode(Input))
 
 ClientSocket.close()

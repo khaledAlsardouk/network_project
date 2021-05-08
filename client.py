@@ -11,9 +11,9 @@ except socket.error as e:
     print(str(e))
 
 Response = ClientSocket.recv(1024)
-print(Response)
+print(Response.decode('utf-8'))
 Response = ClientSocket.recv(1024)
-print(Response)
+print(Response.decode('utf-8'))
 while True:
     Input = input('Say Something: ')
     ClientSocket.send(str.encode(Input))

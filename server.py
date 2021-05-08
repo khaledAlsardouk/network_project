@@ -1,5 +1,6 @@
 import socket
 import os
+from dotenv import load_dotenv
 
 ServerSocket = socket.socket()
 host = '127.0.0.1'
@@ -14,16 +15,12 @@ print('Waitiing for a Connection..')
 ServerSocket.listen(5)
 
 
-def welcome(connection):
-    connection.send(str.encode('Welcome to the Servern \n waiting fo the other player'))
-
-
 def clients_connection(socket1, socket2):
     socket1.send(str.encode('you are the attacker'))
     socket2.send(str.encode('you are the def'))
     while True:
         data = socket1.recv(2048)
-        reply = 'Server Says: ' + data.decode('utf-8')
+        reply = address[0] + ':' + str(address[1]) + ' says ' + data.decode('utf-8')
         print(reply)
         if not data:
             break
@@ -32,19 +29,17 @@ def clients_connection(socket1, socket2):
     socket2.close()
 
 
-arr = []
+clients = []
 while True:
 
-    if ThreadCount < 2:
+    if len(clients) < 2:
         Client, address = ServerSocket.accept()
         print(Client)
         print('Connected to: ' + address[0] + ':' + str(address[1]))
-        welcome(Client)
-        arr.append(Client)
-        ThreadCount += 1
-        print('Thread Number: ' + str(ThreadCount))
+        Client.send(str.encode('Welcome to the Server \nwaiting fo the other player'))
+        clients.append(Client)
 
     else:
-        clients_connection(arr[0], arr[1])
+        clients_connection(clients[0], clients[1])
 
 ServerSocket.close()

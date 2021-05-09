@@ -14,10 +14,11 @@ ServerSocket.listen(5)
 
 
 def clients_connection(socket1, socket2):
-    socket1.send(str.encode('you are the attacker'))
-    socket2.send(str.encode('you are the defender'))
+    socket1.send(str.encode('you are the attacker', encoding='ascii'))
+    socket2.send(str.encode('you are the defender', encoding='ascii'))
+    hostname = socket1.getpeername()
     data = socket1.recv(2048)
-    reply = address[0] + ':' + str(address[1]) + ' says ' + data.decode('utf-8')
+    reply = hostname[0] + ':' + str(hostname[1]) + ' says ' + data.decode('ascii')
     print(reply)
     socket2.sendall(str.encode(reply))
 

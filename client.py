@@ -9,7 +9,7 @@ try:
 except socket.error as e: # return errors related to socket or address semantics
     print(str(e))
 
-Response = ClientSocket.recv(1024) # recieve data from server with max size 1024 bytes
+Response = ClientSocket.recv(1024) # wait and recieve data from server with max size 1024 bytes
 print(Response.decode('ascii')) #decode and print message
 while True:
     Response = ClientSocket.recv(1024)

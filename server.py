@@ -17,7 +17,7 @@ def clients_connection(socket1, socket2):
     socket1.send(str.encode('you are the attacker', encoding='ascii'))      #assign roles
     socket2.send(str.encode('you are the defender', encoding='ascii'))
     hostname = socket1.getpeername() #get the attacker address 
-    data = socket1.recv(2048) #recieve data from the attack max 2048 bytes
+    data = socket1.recv(2048) #wait and recieve data from the attack max 2048 bytes
     reply = hostname[0] + ':' + str(hostname[1]) + ' says ' + data.decode('ascii') #create a reply
     print(reply)
     socket2.sendall(str.encode(reply)) #send the reply to the defender

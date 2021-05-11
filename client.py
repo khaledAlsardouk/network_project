@@ -19,7 +19,7 @@ while True:
         print(Response)                                 #defender behavior
         print(Response.decode('ascii'))
     else:
-        Input = input('Say Something: ')                        #attack behavior
+        Input = 'attack'                     #attack behavior
         ClientSocket.send(Input.encode(encoding='ascii'))
 
 ClientSocket.close()   #close connection

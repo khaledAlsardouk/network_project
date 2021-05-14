@@ -19,9 +19,9 @@ def clients_connection(socket1, socket2):
     hostname = socket1.getpeername()  # get the attacker address
     data = socket1.recv(1024)  # wait and receive data from the attack max 2048 bytes
     reply_origin = hostname[0] + ':' + str(hostname[1]) + ' says ' + data.decode('ascii')  # create a reply
-    reply = data.decode('ascii')
+    reply = data
     print(reply_origin)
-    socket2.sendall(str.encode(reply))  # send the reply to the defender
+    socket2.sendall(data)  # send the reply to the defender
 
 
 clients = []

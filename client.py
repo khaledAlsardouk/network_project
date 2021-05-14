@@ -1,5 +1,6 @@
 import socket
 import time
+import encryption
 
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
@@ -21,15 +22,16 @@ while True:
         Response = ClientSocket.recv(1024)
         response = Response.decode('ascii')  # defender behavior
         print(Response.decode('ascii'))
-        if response.__eq__('attack'):
-            print('defence failed')
-        else:
-            score = score + 1
-            print('defence successful')
-            print(f'score: {score}')
+    #     if response.__eq__('attack'):
+    #         print('defence failed')
+    #     else:
+    #         score = score + 1
+    #         print('defence successful')
+    # #         print(f'score: {score}')
 
     else:
         time.sleep(4)  # attack behavior time.sleep for testing
-        ClientSocket.send(str.encode('attack', encoding='ascii'))
+        message = encryption.encrypt()
+        ClientSocket.send(message)
 
 ClientSocket.close()  # close connection

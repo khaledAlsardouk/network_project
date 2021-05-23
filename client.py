@@ -27,11 +27,10 @@ while True:
     #     else:
     #         score = score + 1
     #         print('defence successful')
-    # #         print(f'score: {score}')
+    #          print(f'score: {score}')
 
     else:
         time.sleep(4)  # attack behavior time.sleep for testing
         message = encryption.encrypt()
         ClientSocket.send(message)
-
 ClientSocket.close()  # close connection

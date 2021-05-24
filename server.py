@@ -1,9 +1,9 @@
 import socket
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
 ServerSocket = socket.socket()  # create socket
 host = '127.0.0.1'
-port = 1233
+port = 1234
 try:
     ServerSocket.bind((host, port))  # create tcp socket
 except socket.error as e:  # return errors related to socket or address semantics

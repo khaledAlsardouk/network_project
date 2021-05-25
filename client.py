@@ -1,7 +1,6 @@
 import socket
 import time
 import encryption
-
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
 port = 1234
@@ -18,6 +17,7 @@ def play1(message):
      ClientSocket.send(message)
      Input = input("do you want to continue attacking:yes or no")
      if Input == str("no"):
+        print("the connection is closed")
         ClientSocket.close()
         return False
      else:
@@ -42,9 +42,10 @@ while connection:
     #          print(f'score: {score}')
 
     else:
-        time.sleep(4)
-        message = encryption.encrypt()
-        connection=play1(message)
+        time.sleep(2)
+        message = encryption.encryption()
+        sent=encryption.decrypt(message)
+        connection=play1(sent)
 
 
 

@@ -4,13 +4,14 @@ import socket
 ServerSocket = socket.socket()  # create socket
 host = '127.0.0.1'
 port = 1234
-try:
-    ServerSocket.bind((host, port))  # create tcp socket
-except socket.error as e:  # return errors related to socket or address semantics
-    print(str(e))
+  def connect():
+    try:
+        ServerSocket.bind((host, port))  # create tcp socket
+    except socket.error as e:  # return errors related to socket or address semantics
+        print(str(e))
+    print('Waiting for a Connection..')
+    ServerSocket.listen(5)  # wait for a connection
 
-print('Waiting for a Connection..')
-ServerSocket.listen(5)  # wait for a connection
 clients = []
 
 def clients_connection(socket1, socket2):
@@ -19,7 +20,8 @@ def clients_connection(socket1, socket2):
     hostname = socket1.getpeername()  # get the attacker address
     data = socket1.recv(1024)  # wait and receive data from the attack max 2048 bytes
     if data.decode() == "no":
-
+        socket1.close()
+        socket2.close()
         clients[0].pop()
     else:
      reply_origin = hostname[0] + ':' + str(hostname[1]) + ' says ' + data.decode('ascii')  # create a reply

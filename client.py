@@ -42,7 +42,7 @@ while connection:
     #          print(f'score: {score}')
 
     else:
-        time.sleep(2)
+        time.sleep(5)
         message = encryption.encryption()
         sent=encryption.decrypt(message)
         connection=play1(sent)

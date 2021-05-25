@@ -1,7 +1,7 @@
 import socket
 import time
 import encryption
-
+import NRZ
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
 port = 1234
@@ -33,6 +33,7 @@ while connection:
     if Response.decode('ascii') != 'you are the attacker':
         Response = ClientSocket.recv(1024)
         response = Response.decode('ascii')  # defender behavior
+        response = NRZ.NRZ(response)
         print(Response.decode('ascii'))
     #     if response.__eq__('attack'):
     #         print('defence failed')
@@ -43,8 +44,8 @@ while connection:
 
     else:
         time.sleep(4)
-        message = encryption.encrypt()
-        connection=play1(message)
+        message = encryption.encryption()
+        connection = play1(message)
 
 
 

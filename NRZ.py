@@ -1,3 +1,5 @@
+word='attack'
+word1=word.encode('ascii')
 def NRZ(word):
     #word = "0111000110011"
     word_in_list= list(word)
@@ -12,6 +14,6 @@ def NRZ(word):
     y = ''.join(str(j) for j in NRZ_of_word)
     print (y)
 
-x = input("please enter a binary number to perform NRZ on it:")
-NRZ(x)
+#x = input("please enter a binary number to perform NRZ on it:")
+NRZ(word1)
 

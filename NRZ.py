@@ -4,7 +4,7 @@
 # WordToBinary(WORD) converts a word to binary
 # BinaryToWord(BINARY) converts binary to char
 def NRZ(BinWord):
-    print("Got this:",BinWord)
+    #print("Got this:",BinWord) #for testing purposes
     word_in_list = list(BinWord)
     #print(word_in_list)
     NRZ_of_word=[""]
@@ -17,7 +17,7 @@ def NRZ(BinWord):
             flip_the_bit=i.replace(" ", "")
         NRZ_of_word.append(flip_the_bit)
     y = ''.join(str(j) for j in NRZ_of_word)
-    print ("Converted it to this:",y)
+    #print ("Converted it to this:",y) #for testing purposes
     return y
 
 """def BinaryToWord(BinWord):
@@ -41,8 +41,8 @@ def WordToBinary(word):
             flip_the_bit = i
         Binary_word2.append(flip_the_bit)
     y = ''.join(str(j) for j in Binary_word2)
-    print(y)
-    return binary_word
+    #print(y) #for testing purposes
+    return y
 
 
 def BinaryToDecimal(binary):
@@ -57,9 +57,17 @@ def BinaryToDecimal(binary):
 
 
 def BinaryToWord(BinWord):
-    str_data = ' '
+    str_data = ''
     for i in range(0, len(BinWord), 7):
         temp_data = int(BinWord[i:i + 7])
         decimal_data = BinaryToDecimal(temp_data)
         str_data = str_data + chr(decimal_data)
-    print("The Binary value after string conversion is:",str_data)
+    #print("The Binary value after string conversion is:",str_data) #for testing purposes
+    return str_data
+
+"""x = WordToBinary("hellothere")
+print(x)
+y = BinaryToWord(x)
+
+z=NRZ(x)
+print(z)"""

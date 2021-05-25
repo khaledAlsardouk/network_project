@@ -1,6 +1,7 @@
 import socket
 import time
 import encryption
+import NRZ
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
 port = 1234
@@ -33,7 +34,16 @@ while connection:
     if Response.decode('ascii') != 'you are the attacker':
         Response = ClientSocket.recv(1024)
         response = Response.decode('ascii')  # defender behavior
-        print(Response.decode('ascii'))
+        BinWord = NRZ.WordToBinary(response)
+        RNZBinWord=NRZ.NRZ(BinWord)
+        WordBin=NRZ.BinaryToWord(RNZBinWord)
+        print("the encoded message:",WordBin)
+        print("decoding message...")
+        DecodedWordBin = NRZ.NRZ(RNZBinWord)
+        DecodedWord = NRZ.BinaryToWord(DecodedWordBin)
+        print("the decoded message:",DecodedWord)
+
+
     #     if response.__eq__('attack'):
     #         print('defence failed')
     #     else:

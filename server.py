@@ -4,13 +4,13 @@ import socket
 ServerSocket = socket.socket()  # create socket
 host = '127.0.0.1'
 port = 1234
-  def connect():
-    try:
-        ServerSocket.bind((host, port))  # create tcp socket
-    except socket.error as e:  # return errors related to socket or address semantics
-        print(str(e))
-    print('Waiting for a Connection..')
-    ServerSocket.listen(5)  # wait for a connection
+#def connect():
+try:
+    ServerSocket.bind((host, port))  # create tcp socket
+except socket.error as e:  # return errors related to socket or address semantics
+     print(str(e))
+print('Waiting for a Connection..')
+ServerSocket.listen(5)  # wait for a connection
 
 clients = []
 

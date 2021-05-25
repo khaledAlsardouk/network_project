@@ -5,7 +5,6 @@ key=Fernet.generate_key()
 def encryption():
 
     crypter=Fernet(key)
-    print(key)
     attack= crypter.encrypt(b'ATTACK')
     return(attack)
 

@@ -2,6 +2,7 @@ import socket
 import time
 import encryption
 import NRZ
+import HammingCode
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
 port = 1234
@@ -27,21 +28,26 @@ def play1(message):
 
 Response = ClientSocket.recv(1024)  # wait and receive data from server with max size 1024 bytes
 print(Response.decode('ascii'))  # decode and print message
-connection=True
+connection = True
 while connection:
     Response = ClientSocket.recv(1024)
     print(Response.decode('ascii'))
     if Response.decode('ascii') != 'you are the attacker':
+        m = len(Response)
+        r = HammingCode.calcRedundantBits(m)
+        arr = HammingCode.posRedundantBits(Response, r)
+        arr = HammingCode.calcParityBits(arr, r)
         Response = ClientSocket.recv(1024)
         response = Response.decode('ascii')  # defender behavior
+        correction = HammingCode.detectError(Response, r)
         BinWord = NRZ.WordToBinary(response)
-        RNZBinWord=NRZ.NRZ(BinWord)
-        WordBin=NRZ.BinaryToWord(RNZBinWord)
-        print("the encoded message:",WordBin)
+        RNZBinWord = NRZ.NRZ(BinWord)
+        WordBin = NRZ.BinaryToWord(RNZBinWord)
+        print("the encoded message:", WordBin)
         print("decoding message...")
         DecodedWordBin = NRZ.NRZ(RNZBinWord)
         DecodedWord = NRZ.BinaryToWord(DecodedWordBin)
-        print("the decoded message:",DecodedWord)
+        print("the decoded message:", DecodedWord)
 
 
     #     if response.__eq__('attack'):
@@ -54,8 +60,8 @@ while connection:
     else:
         time.sleep(5)
         message = encryption.encryption()
-        sent=encryption.decrypt(message)
-        connection=play1(sent)
+        sent = encryption.decrypt(message)
+        connection = play1(sent)
 
 
 

@@ -39,8 +39,8 @@ while connection:
         arr = HammingCode.calcParityBits(arr, r)
         Response = ClientSocket.recv(1024)
         response = Response.decode('ascii')  # defender behavior
-        correction = HammingCode.detectError(Response, r)
         BinWord = NRZ.WordToBinary(response)
+        correction = HammingCode.detectError(BinWord, r)
         RNZBinWord = NRZ.NRZ(BinWord)
         WordBin = NRZ.BinaryToWord(RNZBinWord)
         print("the encoded message:", WordBin)

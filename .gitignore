@@ -4,4 +4,8 @@
 .idea
 .env
 .vscode
+<<<<<<< Updated upstream
 __pycache__
+=======
+.pycache
+>>>>>>> Stashed changes

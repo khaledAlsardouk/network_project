@@ -20,10 +20,12 @@ def play1(message):
      Input = input("do you want to continue attacking:yes or no")
      if Input == str("no"):
         print("the connection is closed")
+        ClientSocket.send(str.encode('the connection is closed by the attacker',encoding='ascii'))
         ClientSocket.close()
         return False
      else:
         ClientSocket.send(message)
+
         return True
 
 Response = ClientSocket.recv(1024)  # wait and receive data from server with max size 1024 bytes
@@ -48,8 +50,6 @@ while connection:
         DecodedWordBin = NRZ.NRZ(RNZBinWord)
         DecodedWord = NRZ.BinaryToWord(DecodedWordBin)
         print("the decoded message:", DecodedWord)
-
-
     #     if response.__eq__('attack'):
     #         print('defence failed')
     #     else:
@@ -57,11 +57,21 @@ while connection:
     #         print('defence successful')
     #          print(f'score: {score}')
 
+        print(Response.decode('ascii'))
+        if response.__eq__('ATTACK'):
+         ClientSocket.send(str.encode('attack successful', encoding='ascii'))
+        if response.__eq__('attack successful'):
+            score = score+1
+            print(f'score:{score}')
+        elif response.__eq__('defence succesfsul'):
+            score = score + 1
+            print(f'score: {score}')
+
+
     else:
-        time.sleep(5)
+        time.sleep(10)
         message = encryption.encryption()
         sent = encryption.decrypt(message)
         connection = play1(sent)
-
 
 

@@ -57,15 +57,15 @@ while connection:
     #         print('defence successful')
     #          print(f'score: {score}')
 
-        print(Response.decode('ascii'))
-        if response.__eq__('ATTACK'):
-         ClientSocket.send(str.encode('attack successful', encoding='ascii'))
-        if response.__eq__('attack successful'):
-            score = score+1
-            print(f'score:{score}')
-        elif response.__eq__('defence succesfsul'):
-            score = score + 1
-            print(f'score: {score}')
+        # print(Response.decode('ascii'))
+        # if response.__eq__('ATTACK'):
+        #  ClientSocket.send(str.encode('attack successful', encoding='ascii'))
+        # if response.__eq__('attack successful'):
+        #     score = score+1
+        #     print(f'score:{score}')
+        # elif response.__eq__('defence succesfsul'):
+        #     score = score + 1
+        #     print(f'score: {score}')
 
 
     else:

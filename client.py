@@ -3,10 +3,12 @@ import time
 import encryption
 import NRZ
 import HammingCode
+
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
 port = 1234
 score = 0
+connection = True
 
 print('Waiting for connection')
 try:
@@ -14,64 +16,35 @@ try:
 except socket.error as e:  # return errors related to socket or address semantics
     print(str(e))
 
-
-def play1(message):
-     ClientSocket.send(message)
-     Input = input("do you want to continue attacking:yes or no")
-     if Input == str("no"):
-        print("the connection is closed")
-        ClientSocket.send(str.encode('the connection is closed by the attacker',encoding='ascii'))
-        ClientSocket.close()
-        return False
-     else:
-        ClientSocket.send(message)
-
-        return True
-
 Response = ClientSocket.recv(1024)  # wait and receive data from server with max size 1024 bytes
 print(Response.decode('ascii'))  # decode and print message
-connection = True
+
 while connection:
     Response = ClientSocket.recv(1024)
     print(Response.decode('ascii'))
     if Response.decode('ascii') != 'you are the attacker':
-        m = len(Response)
-        r = HammingCode.calcRedundantBits(m)
-        arr = HammingCode.posRedundantBits(Response, r)
-        arr = HammingCode.calcParityBits(arr, r)
-        Response = ClientSocket.recv(1024)
-        response = Response.decode('ascii')  # defender behavior
-        BinWord = NRZ.WordToBinary(response)
-        correction = HammingCode.detectError(BinWord, r)
-        RNZBinWord = NRZ.NRZ(BinWord)
-        WordBin = NRZ.BinaryToWord(RNZBinWord)
-        print("the encoded message:", WordBin)
-        print("decoding message...")
-        DecodedWordBin = NRZ.NRZ(RNZBinWord)
-        DecodedWord = NRZ.BinaryToWord(DecodedWordBin)
-        print("the decoded message:", DecodedWord)
-    #     if response.__eq__('attack'):
-    #         print('defence failed')
-    #     else:
-    #         score = score + 1
-    #         print('defence successful')
-    #          print(f'score: {score}')
-
-        # print(Response.decode('ascii'))
-        # if response.__eq__('ATTACK'):
-        #  ClientSocket.send(str.encode('attack successful', encoding='ascii'))
-        # if response.__eq__('attack successful'):
-        #     score = score+1
-        #     print(f'score:{score}')
-        # elif response.__eq__('defence succesfsul'):
-        #     score = score + 1
-        #     print(f'score: {score}')
+        Response = ClientSocket.recv(1024)  # receive attack
+        # response = encryption.decrypt(Response)  # defender behavior
+        print(Response.decode('ascii'))  # print the response
+        # BinWord = NRZ.WordToBinary(response)
+        # RNZBinWord = NRZ.NRZ(BinWord)
+        # DecodedWord = NRZ.BinaryToWord(RNZBinWord)
+        if Response.decode('ascii') == 'ATTACK':
+            score -= 1
+            print('defence failed')
+            ClientSocket.send(str.encode('defence failed', encoding='ascii'))
+        else:  # send if the attack failed or not
+            score += 1
+            print('defence successful')
+            ClientSocket.send(str.encode('defence successful', encoding='ascii'))
 
 
     else:
-        time.sleep(10)
-        message = encryption.encryption()
-        sent = encryption.decrypt(message)
-        connection = play1(sent)
-
-
+        time.sleep(2)  # sleep for testing
+        # message = encryption.encryption()
+        ClientSocket.send(str.encode('ATTACK', encoding='ascii'))  # send attack in ascii
+        message = ClientSocket.recv(1024)  # receive if the attack failed or not
+        if message == 'defence failed':
+            score += 1
+        else:
+            score -= 1

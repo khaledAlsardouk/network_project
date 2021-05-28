@@ -5,6 +5,7 @@
 venv
 .env
 .vscode
+__pycache__
 <<<<<<< Updated upstream
 __pycache__
 =======

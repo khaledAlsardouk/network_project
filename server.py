@@ -44,5 +44,4 @@ while True:
     else:
         clients_connection(clients[0], clients[1])  # go to  game
         clients_connection(clients[1], clients[0])  # simple method to switch turns for now
-        clients_connection(clients[0], clients[1])
-        break
+

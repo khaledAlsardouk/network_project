@@ -31,10 +31,12 @@ while connection:
         # DecodedWord = NRZ.BinaryToWord(RNZBinWord)
         if Response.decode('ascii') == 'ATTACK':
             score -= 1
+            print(score)
             print('defence failed')
             ClientSocket.send(str.encode('defence failed', encoding='ascii'))
         else:  # send if the attack failed or not
             score += 1
+            print(score)
             print('defence successful')
             ClientSocket.send(str.encode('defence successful', encoding='ascii'))
 
@@ -44,7 +46,9 @@ while connection:
         # message = encryption.encryption()
         ClientSocket.send(str.encode('ATTACK', encoding='ascii'))  # send attack in ascii
         message = ClientSocket.recv(1024)  # receive if the attack failed or not
-        if message == 'defence failed':
+        if message.decode('ascii') == 'defence failed':
             score += 1
+            print(score)
         else:
             score -= 1
+            print(score)

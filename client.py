@@ -7,7 +7,8 @@ import HammingCode
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
 port = 1234
-score = 0
+def_score = 0
+attk_score=0
 connection = True
 
 print('Waiting for connection')
@@ -30,13 +31,13 @@ while connection:
         # RNZBinWord = NRZ.NRZ(BinWord)
         # DecodedWord = NRZ.BinaryToWord(RNZBinWord)
         if Response.decode('ascii') == 'ATTACK':
-            score -= 1
-            print(score)
+            def_score -= 1
+            print(def_score)
             print('defence failed')
             ClientSocket.send(str.encode('defence failed', encoding='ascii'))
         else:  # send if the attack failed or not
-            score += 1
-            print(score)
+            def_score += 1
+            print(def_score)
             print('defence successful')
             ClientSocket.send(str.encode('defence successful', encoding='ascii'))
 
@@ -47,8 +48,8 @@ while connection:
         ClientSocket.send(str.encode('ATTACK', encoding='ascii'))  # send attack in ascii
         message = ClientSocket.recv(1024)  # receive if the attack failed or not
         if message.decode('ascii') == 'defence failed':
-            score += 1
-            print(score)
+            attk_score += 1
+            print(attk_score)
         else:
-            score -= 1
-            print(score)
+            attk_score -= 1
+            print(attk_score)

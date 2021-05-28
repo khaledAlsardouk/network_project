@@ -1,8 +1,11 @@
 
 #THIS FILE HAS 3 SELF DESCRIPTIVE FUNCTIONS:
 # NRZ(BINARY) FUNCTION changes flips 1s and 0s
-# WordToBinary(WORD) converts a word to binary
+# ByteToBinary(WORD) converts ASCII to binary
 # BinaryToWord(BINARY) converts binary to char
+
+import binascii
+
 def NRZ(BinWord):
     #print("Got this:",BinWord) #for testing purposes
     word_in_list = list(BinWord)
@@ -20,7 +23,7 @@ def NRZ(BinWord):
     #print ("Converted it to this:",y) #for testing purposes
     return y
 
-"""def BinaryToWord(BinWord):
+def BinaryToWord(BinWord):
     a_binary_string = BinWord
     binary_values = a_binary_string.split()
     ascii_string = ""
@@ -29,10 +32,11 @@ def NRZ(BinWord):
         ascii_character = chr(an_integer)
         ascii_string += ascii_character
     print(ascii_string)
-    return ascii_string"""
+    return ascii_string
 
-def WordToBinary(word):
-    binary_word = ' '.join(format(ord(x), 'b') for x in word)  # converts the word to binary
+def ByteToBinary(word):
+    x= word.decode("utf-8")
+    binary_word = ' '.join(format(ord(x), 'b') for x in x)  # converts the word to binary
     Binary_word2 = [""]
     for i in binary_word:
         if i == ' ':
@@ -64,10 +68,18 @@ def BinaryToWord(BinWord):
         str_data = str_data + chr(decimal_data)
     #print("The Binary value after string conversion is:",str_data) #for testing purposes
     return str_data
+#def WordToBinNew(word):
+"""
+def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
+    bits = bin(int(binascii.hexlify(text.encode(encoding, errors)), 16))[2:]
+    return bits.zfill(8 * ((len(bits) + 7) // 8))
 
-"""x = WordToBinary("hellothere")
-print(x)
-y = BinaryToWord(x)
+def text_from_bits(bits, encoding='utf-8', errors='surrogatepass'):
+    n = int(bits, 2)
+    return int2bytes(n).decode(encoding, errors)
 
-z=NRZ(x)
-print(z)"""
+def int2bytes(i):
+    hex_string = '%x' % i
+    n = len(hex_string)
+    return binascii.unhexlify(hex_string.zfill(n + (n & 1)))
+"""

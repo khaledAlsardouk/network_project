@@ -1,6 +1,7 @@
 import socket
 import time
-import encryption
+#import BitArray
+#import encryption
 import NRZ
 import HammingCode
 
@@ -25,8 +26,12 @@ while connection:
     print(Response.decode('ascii'))
     if Response.decode('ascii') != 'you are the attacker':
         Response = ClientSocket.recv(1024)  # receive attack
-        # response = encryption.decrypt(Response)  # defender behavior
-        print(Response.decode('ascii'))  # print the response
+        #response = encryption.decrypt(Response)  # defender behavior
+        #print(Response.decode('ascii'))  # print the response
+        response=NRZ.ByteToBinary(Response)
+        NRZ_bin=NRZ.NRZ(response)
+        print(NRZ.BinaryToWord(NRZ_bin))
+        print("the message was:",NRZ.BinaryToWord(NRZ.NRZ(NRZ_bin)))
         # BinWord = NRZ.WordToBinary(response)
         # RNZBinWord = NRZ.NRZ(BinWord)
         # DecodedWord = NRZ.BinaryToWord(RNZBinWord)
@@ -45,7 +50,7 @@ while connection:
     else:
         time.sleep(2)  # sleep for testing
         # message = encryption.encryption()
-        ClientSocket.send(str.encode('ATTACK', encoding='ascii'))  # send attack in ascii
+        ClientSocket.send(str.encode('Hamod_Loute', encoding='ascii'))  # send attack in ascii
         message = ClientSocket.recv(1024)  # receive if the attack failed or not
         if message.decode('ascii') == 'defence failed':
             attk_score += 1

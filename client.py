@@ -36,25 +36,31 @@ while connection:
         # RNZBinWord = NRZ.NRZ(BinWord)
         # DecodedWord = NRZ.BinaryToWord(RNZBinWord)
         if Response.decode('ascii') == 'ATTACK':
-            def_score -= 1
+            def_score -= 10
             print(def_score)
             print('defence failed')
             ClientSocket.send(str.encode('defence failed', encoding='ascii'))
+
         else:  # send if the attack failed or not
-            def_score += 1
+            def_score += 10
             print(def_score)
             print('defence successful')
             ClientSocket.send(str.encode('defence successful', encoding='ascii'))
-
-
+    elif Response.decode('ascii') == 'calculate score':
+            score = attk_score + def_score
+            print(score)
+            ClientSocket.send(str.encode(str(score), encoding='ascii'))
+            print('worked')
+            result = ClientSocket.recv(1024)
+            print(result)
     else:
         time.sleep(2)  # sleep for testing
         # message = encryption.encryption()
-        ClientSocket.send(str.encode('Hamod_Loute', encoding='ascii'))  # send attack in ascii
+        ClientSocket.send(str.encode('ATTACK', encoding='ascii'))  # send attack in ascii
         message = ClientSocket.recv(1024)  # receive if the attack failed or not
         if message.decode('ascii') == 'defence failed':
-            attk_score += 1
+            attk_score += 10
             print(attk_score)
         else:
-            attk_score -= 1
+            attk_score -= 10
             print(attk_score)

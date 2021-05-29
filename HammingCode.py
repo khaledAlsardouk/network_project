@@ -98,3 +98,13 @@ arr = '11101001110'
 print("Error Data is " + arr)
 correction = detectError(arr, r)
 print("The position of error is " + str(correction))
+
+def correction(correction):
+    new_arr = list(arr)
+    for x in range(0, len(arr)+1):
+        if x == correction:
+            if new_arr[len(arr) - x] == '1':
+                new_arr[len(arr) - x] = '0'
+            elif new_arr[len(arr) - x] == '0':
+                new_arr[len(arr) - x] = '1'
+    correct_arr = "".join(new_arr)

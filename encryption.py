@@ -19,11 +19,12 @@ def encryption():
 def decrypt(encrypted_text):
     crypter = Fernet(key)
     attack = crypter.decrypt(encrypted_text)
+    attack = detect_errors(attack)
     return attack
 
 
 def detect_errors(message):
     BinWord = NRZ.WordToBinary(message)
     correction = HammingCode.detectError(BinWord, r)
-    elzabta = 'soubra parts'
-    return elzabta
+    correct = HammingCode.correction(correction)
+    return correct

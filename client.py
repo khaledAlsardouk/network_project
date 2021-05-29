@@ -29,15 +29,12 @@ while connection:
         Response = ClientSocket.recv(1024)  # receive attack
         # response = encryption.decrypt(Response)  # defender behavior
         # print(Response.decode('ascii'))  # print the response
+        print(Response.decode('ascii'))
         response = NRZ.ByteToBinary(Response)
-        NRZ_bin = NRZ.NRZ(response)
-        print(NRZ.BinaryToWord(NRZ_bin))
-        print("the message was:", NRZ.BinaryToWord(NRZ.NRZ(NRZ_bin)))
-        # BinWord = NRZ.WordToBinary(response)
-        # RNZBinWord = NRZ.NRZ(BinWord)
-        # DecodedWord = NRZ.BinaryToWord(RNZBinWord)
-        print(Response.decode("ascii"))
-        if Response.decode('ascii') == 'ATTACK':
+        Response = NRZ.NRZ(response)
+        Response = NRZ.BinaryToWord(Response)
+        print('NRZ result: ' + Response)
+        if Response == 'ATTACK':
             def_score -= 10
             print(def_score)
             print('defence failed')

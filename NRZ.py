@@ -3,7 +3,7 @@
 # NRZ(BINARY) FUNCTION changes flips 1s and 0s
 # ByteToBinary(WORD) converts ASCII to binary
 # BinaryToWord(BINARY) converts binary to char
-
+# WordToBinary(WORD) converts char to binary
 import binascii
 def NRZ(BinWord):
     #print("Got this:",BinWord) #for testing purposes
@@ -22,7 +22,7 @@ def NRZ(BinWord):
     #print ("Converted it to this:",y) #for testing purposes
     return y
 
-def BinaryToWord(BinWord):
+"""def BinaryToWord(BinWord):
     a_binary_string = BinWord
     binary_values = a_binary_string.split()
     ascii_string = ""
@@ -31,7 +31,7 @@ def BinaryToWord(BinWord):
         ascii_character = chr(an_integer)
         ascii_string += ascii_character
     print(ascii_string)
-    return ascii_string
+    return ascii_string"""
 
 def ByteToBinary(word):
     x= word.decode("utf-8")
@@ -67,6 +67,20 @@ def BinaryToWord(BinWord):
         str_data = str_data + chr(decimal_data)
     #print("The Binary value after string conversion is:",str_data) #for testing purposes
     return str_data
+
+
+def WordToBinary(word):
+    binary_word = ' '.join(format(ord(x), 'b') for x in word)  # converts the word to binary
+    Binary_word2 = [""]
+    for i in binary_word:
+        if i == ' ':
+            flip_the_bit = i.replace(" ", "")
+        else:
+            flip_the_bit = i
+        Binary_word2.append(flip_the_bit)
+    y = ''.join(str(j) for j in Binary_word2)
+    #print(y) #for testing purposes
+    return y
 #def WordToBinNew(word):
 """
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):

@@ -26,5 +26,5 @@ def decrypt(encrypted_text):
 def detect_errors(message):
     BinWord = NRZ.WordToBinary(message)
     correction = HammingCode.detectError(BinWord, r)
-    correct = HammingCode.correction(correction)
+    correct = HammingCode.correction(BinWord, correction)
     return correct

@@ -5,7 +5,6 @@
 # BinaryToWord(BINARY) converts binary to char
 
 import binascii
-
 def NRZ(BinWord):
     #print("Got this:",BinWord) #for testing purposes
     word_in_list = list(BinWord)

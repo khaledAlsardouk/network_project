@@ -72,34 +72,7 @@ def detectError(arr, nr):
 
     # Convert binary to decimal
     return int(str(res), 2)
-
-
-# Enter the data to be transmitted
-data = '1011001'
-
-# Calculate the no of Redundant Bits Required
-m = len(data)
-r = calcRedundantBits(m)
-
-# Determine the positions of Redundant Bits
-arr = posRedundantBits(data, r)
-
-# Determine the parity bits
-arr = calcParityBits(arr, r)
-
-# Data to be transferred
-print("Data transferred is " + arr)
-
-# Stimulate error in transmission by changing
-# a bit value.
-# 10101001110 -> 11101001110, error in 10th position.
-
-arr = '11101001110'
-print("Error Data is " + arr)
-correction = detectError(arr, r)
-print("The position of error is " + str(correction))
-
-def correction(correction):
+def correction(arr,correction):
     new_arr = list(arr)
     for x in range(0, len(arr)+1):
         if x == correction:

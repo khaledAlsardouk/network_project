@@ -1,11 +1,33 @@
 import socket
 import time
-
 # import BitArray
 # import encryption
 import NRZ
 import HammingCode
+from attackerShift import *
 global threshold
+from random import randrange
+
+def attackPath(text):
+    choice = randrange(0,1)
+    print(choice)
+    if choice == 0:
+        # 0 means NRZ
+        text_binary = NRZ.ByteToBinary(text)
+        return NRZ.NRZ(text_binary)
+    else:
+        # 1 means Shift
+        return shift(text)
+def defenderPath(text):
+    choice = randrange(0,1)
+    print(choice)
+    if choice == 1:
+        # 1 means NRZ
+        #text_binary = NRZ.ByteToBinary(text)
+        return NRZ.NRZ(text)
+    else:
+        # 0 means Shift
+        return shift(text)
 
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
@@ -30,6 +52,7 @@ while connection:
     print(Response)
     if Response == 'you are the defender':
         Response = ClientSocket.recv(1024)  # receive attack
+        defenderPath(Response)
         # response = encryption.decrypt(Response)  # defender behavior
         # print(Response.decode('ascii'))  # print the response
         print(Response.decode('ascii'))
@@ -37,7 +60,7 @@ while connection:
         Response = NRZ.NRZ(response)
         Response = NRZ.BinaryToWord(Response)
         print('NRZ result: ' + Response)
-        if Response == 'ATTACK':
+        if Response == '1':
             def_score -= 10
             print(def_score)
             print('defence failed')
@@ -52,7 +75,9 @@ while connection:
         time.sleep(2)  # sleep for testing
         # message = encryption.encryption()
         intialy=time.time()
-        ClientSocket.send(str.encode('ATTACK', encoding='ascii'))  # send attack in ascii
+        word = 'ATTACK'
+        word_encrypted = attackPath(word)
+        ClientSocket.send(str.encode(word_encrypted, encoding='ascii'))  # send attack in ascii
         message = ClientSocket.recv(1024)  # receive if the attack failed or not
         finaly=time.time()
         rtt=finaly-intialy
@@ -75,3 +100,7 @@ while connection:
         result = ClientSocket.recv(1024)
         result.decode('ascii')
         print(result)
+
+
+
+

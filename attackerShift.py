@@ -1,7 +1,4 @@
-
-
-def shift():
-    text="ATTACK"
+def shift(text):
     print(text)
     #represent ATTACK in binary
     birep = ''.join(format(ord(char), '08b')for char in text)
@@ -16,7 +13,6 @@ def shift():
         #birep=''.join(format(ord(char), '08b')for char in chr(ord(char)+shift) )
         #print("the binary representation of the letter becomes\n",str(birep))
         output+=chr(ord(char)+shift)
-
 
     print(output)
     # represent ATTACK after shifting

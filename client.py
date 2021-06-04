@@ -3,23 +3,9 @@ import time
 import attacker
 import defender
 import HammingCode
-from random import randrange
+import random
 
 global threshold
-
-
-def attack_defence(text, who):
-    choice = randrange(0, 1)
-    print(choice)
-    if choice == 0:
-        # 0 means NRZ
-        text_binary = defender.WordToBinary(text)
-        return defender.NRZ(text_binary)
-    elif choice == 1 and who == 'atk':
-        return attacker.shift(text)
-    else:
-        return defender.shift(text)
-
 
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
@@ -44,9 +30,14 @@ while connection:
     print(Response)
     if Response == 'you are the defender':
         Response = ClientSocket.recv(1024)  # receive attack
-        Response = Response.decode('ascii')
         Response = attacker.detect_errors(Response)
-        Response = attack_defence(Response, 'def')
+        choice = random.randint(0, 1)
+        if choice == 0:
+            Response = defender.ByteToBinary(Response)
+            Response = defender.NRZ(Response)
+        elif choice == 1:
+           Response=defender.shift(Response.decode('ascii'))
+
         if Response == 'ATTACK':
             def_score -= 10
             print(def_score)
@@ -63,9 +54,15 @@ while connection:
         # message = encryption.encryption()
         initial = time.time()
         word = 'ATTACK'
-        word = word.encode('ascii')
-        word_encrypted = attack_defence(word, 'atk')
-        ClientSocket.send(str.encode(word_encrypted))  # send attack in ascii
+        choice = random.randint(0, 1)
+        if choice == 0:
+            word = defender.WordToBinary(word)
+            word = defender.NRZ(word)
+            word.encode('ascii')
+        else:
+            Response = defender.shift(Response.decode('ascii'))
+
+        ClientSocket.send(str(word).encode('ascii'))  # send attack in ascii
         message = ClientSocket.recv(1024)  # receive if the attack failed or not
         final = time.time()
         rtt = final - initial

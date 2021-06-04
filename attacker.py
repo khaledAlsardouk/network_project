@@ -24,30 +24,19 @@ def decrypt(encrypted_text):
 
 
 def detect_errors(message):
-    BinWord = defender.WordToBinary(message)
+    BinWord = defender.ByteToBinary(message)
     correction = HammingCode.detectError(BinWord, r)
     correct = HammingCode.correction(BinWord, correction)
     return correct
 
-def decimalToBinary(num):
-    """This function converts decimal number
-    to binary and prints it"""
-    if num > 1:
-        decimalToBinary(num // 2)
-    #print(num % 2, end='')
 
-def shift():
-    text="ATTACK"
-    birep = ''.join(format(ord(char), 'b')for char in text)
-    #print(birep)
+def shift(word):
+    birep = ''.join(format(ord(char), 'b') for char in word)
+    # print(birep)
     decimal = 0
     for digit in birep:
         decimal = decimal * 2 + int(digit)
-
-    #print(decimal)
-
-    shiftedDecimal=decimal>>2
-    #print(shiftedDecimal)
-
-    return decimalToBinary(shiftedDecimal)
-
+    shiftedDecimal = decimal >> 2
+    word = defender.decimalToBinary(shiftedDecimal)
+    word = defender.BinaryToWord(word)
+    return word

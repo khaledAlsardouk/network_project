@@ -75,10 +75,24 @@ def WordToBinary(word):
 
 
 # def WordToBinNew(word):
+def decimalToBinary(num):
+    """This function converts decimal number
+    to binary and prints it"""
+    if num > 1:
+        decimalToBinary(num // 2)
+    #print(num % 2, end='')
+def shift():
+    text = "ATTACK"
+    birep = ''.join(format(ord(char), 'b') for char in text)
+    #print(birep)
+    decimal = 0
+    for digit in birep:
+        decimal = decimal * 2 + int(digit)
+    #print(decimal)
 
-def shift(text):
-    output = ""
-    shift = 10
-    for char in text:
-        output += chr(ord(char) + shift)
-    return output
+    shiftedDecimal = decimal << 2
+    #print(shiftedDecimal)
+    return decimalToBinary(shiftedDecimal)
+
+
+

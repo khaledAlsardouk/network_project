@@ -4,6 +4,8 @@ import time
 ServerSocket = socket.socket()  # create socket
 host = '127.0.0.1'
 port = 1234
+
+
 def connect(host, port):
     try:
         ServerSocket.bind((host, port))  # create tcp socket
@@ -12,25 +14,30 @@ def connect(host, port):
 
     print('Waiting for a Connection..')
     ServerSocket.listen(5)  # wait for a connection
+
+
 clients = []
+
+
 def clients_connection(socket1, socket2):
-   # intial_time=time.time() #time at the start of the tcp connection
+    # intial_time=time.time() #time at the start of the tcp connection
     socket1.send(str.encode('you are the attacker', encoding='ascii'))  # assign roles
     socket2.send(str.encode('you are the defender', encoding='ascii'))
     hostname = socket1.getpeername()  # get the attacker address
     data = socket1.recv(1024)  # wait and receive data from the attack max 1024 bytes
-   # att_time=time.time()# time for the first attack
+    # att_time=time.time()# time for the first attack
     hostname2 = socket1.getpeername()  # get the defender address
     reply_origin = hostname[0] + ':' + str(hostname[1]) + ' says ' + data.decode('ascii')  # create a reply
     print(reply_origin)
     socket2.sendall(data)  # send the reply to the defender
     data2 = socket2.recv(1024)  # see if the defence failed or not
-    #def_time=time.time()#time for first defence
+    # def_time=time.time()#time for first defence
     reply_origin = hostname2[0] + ':' + str(hostname2[1]) + ' says ' + data2.decode('ascii')  # create a reply
     print(reply_origin)
     socket1.sendall(data2)  # send the response to the attacker
-    #rtt_attack=intial_time-att_time
-    #rtt_def=intial_time-def_time
+    # rtt_attack=intial_time-att_time
+    # rtt_def=intial_time-def_time
+
 
 def game():
     while True:

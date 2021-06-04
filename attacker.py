@@ -1,9 +1,9 @@
 from cryptography.fernet import Fernet
 import HammingCode
-import NRZ
+import defender
 
 key = Fernet.generate_key()
-Response = NRZ.WordToBinary('ATTACK')
+Response = defender.WordToBinary('ATTACK')
 m = len(Response)
 r = HammingCode.calcRedundantBits(m)
 arr = HammingCode.posRedundantBits(Response, r)
@@ -24,14 +24,15 @@ def decrypt(encrypted_text):
 
 
 def detect_errors(message):
-    BinWord = NRZ.WordToBinary(message)
+    BinWord = defender.WordToBinary(message)
     correction = HammingCode.detectError(BinWord, r)
     correct = HammingCode.correction(BinWord, correction)
     return correct
 
+
 def shift(text):
     output = ""
-    shift= -10
+    shift = -10
     for char in text:
         output += chr(ord(char) + shift)
     return output

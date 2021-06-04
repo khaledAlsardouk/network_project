@@ -28,3 +28,10 @@ def detect_errors(message):
     correction = HammingCode.detectError(BinWord, r)
     correct = HammingCode.correction(BinWord, correction)
     return correct
+
+def shift(text):
+    output = ""
+    shift= -10
+    for char in text:
+        output += chr(ord(char) + shift)
+    return output

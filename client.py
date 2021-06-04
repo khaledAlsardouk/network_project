@@ -1,33 +1,36 @@
 import socket
 import time
-# import BitArray
-# import encryption
-import NRZ
+import attacker
+import defender
 import HammingCode
-from attackerShift import *
+
 global threshold
 from random import randrange
 
+
 def attackPath(text):
-    choice = randrange(0,1)
+    choice = randrange(0, 1)
     print(choice)
     if choice == 0:
         # 0 means NRZ
-        text_binary = NRZ.ByteToBinary(text)
-        return NRZ.NRZ(text_binary)
+        text_binary = defender.ByteToBinary(text)
+        return defender.NRZ(text_binary)
     else:
         # 1 means Shift
-        return shift(text)
+        return attacker.shift(text, -10)
+
+
 def defenderPath(text):
-    choice = randrange(0,1)
+    choice = randrange(0, 1)
     print(choice)
     if choice == 1:
         # 1 means NRZ
-        #text_binary = NRZ.ByteToBinary(text)
-        return NRZ.NRZ(text)
+        # text_binary = NRZ.ByteToBinary(text)
+        return defender.NRZ(text)
     else:
         # 0 means Shift
-        return shift(text)
+        return defender.shift(text)
+
 
 ClientSocket = socket.socket()  # create socket
 host = '127.0.0.1'  # local host ip for now
@@ -52,15 +55,8 @@ while connection:
     print(Response)
     if Response == 'you are the defender':
         Response = ClientSocket.recv(1024)  # receive attack
-        defenderPath(Response)
-        # response = encryption.decrypt(Response)  # defender behavior
-        # print(Response.decode('ascii'))  # print the response
-        print(Response.decode('ascii'))
-        response = NRZ.ByteToBinary(Response)
-        Response = NRZ.NRZ(response)
-        Response = NRZ.BinaryToWord(Response)
-        print('NRZ result: ' + Response)
-        if Response == '1':
+        Response = defenderPath(Response)
+        if Response == 'ATTACK':
             def_score -= 10
             print(def_score)
             print('defence failed')
@@ -74,18 +70,18 @@ while connection:
     elif Response == 'you are the attacker':
         time.sleep(2)  # sleep for testing
         # message = encryption.encryption()
-        intialy=time.time()
+        intialy = time.time()
         word = 'ATTACK'
         word_encrypted = attackPath(word)
         ClientSocket.send(str.encode(word_encrypted, encoding='ascii'))  # send attack in ascii
         message = ClientSocket.recv(1024)  # receive if the attack failed or not
-        finaly=time.time()
-        rtt=finaly-intialy
-        threshold=0.1
+        finaly = time.time()
+        rtt = finaly - intialy
+        threshold = 0.1
         print(rtt)
-        if rtt>threshold:
-            attk_score-=20
-            def_score+=20
+        if rtt > threshold:
+            attk_score -= 20
+            def_score += 20
             print(attk_score)
         elif message.decode('ascii') == 'defence failed':
             attk_score += 10
@@ -100,7 +96,3 @@ while connection:
         result = ClientSocket.recv(1024)
         result.decode('ascii')
         print(result)
-
-
-
-

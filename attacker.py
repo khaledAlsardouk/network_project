@@ -30,13 +30,25 @@ def detect_errors(message):
     return correct
 
 
-def shift(word):
-    birep = ''.join(format(ord(char), 'b') for char in word)
-    # print(birep)
-    decimal = 0
-    for digit in birep:
-        decimal = decimal * 2 + int(digit)
-    shiftedDecimal = decimal >> 2
-    word = defender.decimalToBinary(shiftedDecimal)
-    word = defender.BinaryToWord(word)
-    return word
+res=''
+def shift(res):
+    text = "ATTACK"
+    birep = ''.join(format(ord(char), 'b') for char in text)
+    print(birep)
+
+
+    res = (birep * 3)[len(birep) + 7 - 3:
+                      2 * len(birep) + 7 -3]
+    return res
+
+
+
+
+
+def defenderShift(defres):
+
+
+    defres = (res * 3)[len(res) + 3 - 7:
+                        2 * len(res) + 3 -7]
+
+    return defres

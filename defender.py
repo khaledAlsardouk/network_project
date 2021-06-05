@@ -83,15 +83,3 @@ def decimalToBinary(num):
     # print(num % 2, end='')
 
 
-def shift(word):
-    birep = ''.join(format(ord(char), 'b') for char in word)
-    # print(birep)
-    decimal = 0
-    for digit in birep:
-        decimal = decimal * 2 + int(digit)
-    # print(decimal)
-    shiftedDecimal = decimal << 2
-    # print(shiftedDecimal)
-    word= decimalToBinary(shiftedDecimal)
-    word= BinaryToWord(word)
-    return word

@@ -36,7 +36,7 @@ while connection:
             Response = defender.ByteToBinary(Response)
             Response = defender.NRZ(Response)
         elif choice == 1:
-           Response=defender.shift(Response.decode('ascii'))
+           Response=attacker.defenderShift(Response)
 
         if Response == 'ATTACK':
             def_score -= 10
@@ -60,7 +60,7 @@ while connection:
             word = defender.NRZ(word)
             word.encode('ascii')
         else:
-            Response = defender.shift(Response.decode('ascii'))
+            Response = attacker.shift(word)
 
         ClientSocket.send(str(word).encode('ascii'))  # send attack in ascii
         message = ClientSocket.recv(1024)  # receive if the attack failed or not

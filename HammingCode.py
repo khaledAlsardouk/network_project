@@ -83,4 +83,4 @@ def correction(arr, correction):
             elif new_arr[len(arr) - x] == '0':
                 new_arr[len(arr) - x] = '1'
     correct_arr = "".join(new_arr)
-    return correct_arr.encode('ascii')
+    return correct_arr

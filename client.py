@@ -33,10 +33,10 @@ while connection:
         Response = attacker.detect_errors(Response)
         choice = random.randint(0, 1)
         if choice == 0:
-            Response = defender.ByteToBinary(Response)
             Response = defender.NRZ(Response)
         elif choice == 1:
-           Response=attacker.defenderShift(Response)
+            Response = defender.BinaryToWord(Response)
+            Response = attacker.defenderShift(Response)
 
         if Response == 'ATTACK':
             def_score -= 10
@@ -58,7 +58,6 @@ while connection:
         if choice == 0:
             word = defender.WordToBinary(word)
             word = defender.NRZ(word)
-            word.encode('ascii')
         else:
             Response = attacker.shift(word)
 
@@ -83,5 +82,4 @@ while connection:
         print(score)
         ClientSocket.send(str.encode(str(score), encoding='ascii'))
         result = ClientSocket.recv(1024)
-        result.decode('ascii')
-        print(result)
+        print(result.decode('ascii'))

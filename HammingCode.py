@@ -62,7 +62,7 @@ def detectError(arr, nr):
     for i in range(nr):
         val = 0
         for j in range(1, n + 1):
-            if (j & (2 ** i) == (2 ** i)):
+            if j & (2 ** i) == (2 ** i):
                 val = val ^ int(arr[-1 * j])
 
         # Create a binary no by appending
@@ -72,12 +72,15 @@ def detectError(arr, nr):
 
     # Convert binary to decimal
     return int(str(res), 2)
-def correction(arr,correction):
+
+
+def correction(arr, correction):
     new_arr = list(arr)
-    for x in range(0, len(arr)+1):
+    for x in range(0, len(arr) + 1):
         if x == correction:
             if new_arr[len(arr) - x] == '1':
                 new_arr[len(arr) - x] = '0'
             elif new_arr[len(arr) - x] == '0':
                 new_arr[len(arr) - x] = '1'
     correct_arr = "".join(new_arr)
+    return correct_arr.encode('ascii')

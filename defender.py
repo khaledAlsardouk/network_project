@@ -21,7 +21,7 @@ def NRZ(BinWord):
         NRZ_of_word.append(flip_the_bit)
     y = ''.join(str(j) for j in NRZ_of_word)
     # print ("Converted it to this:",y) #for testing purposes
-    return y
+    return BinaryToWord(y)
 
 
 def ByteToBinary(word):
@@ -42,12 +42,12 @@ def ByteToBinary(word):
 def BinaryToDecimal(binary):
     binary1 = binary
     decimal, i, n = 0, 0, 0
-    while (binary != 0):
+    while binary != 0:
         dec = binary % 10
         decimal = decimal + dec * pow(2, i)
         binary = binary // 10
         i += 1
-    return (decimal)
+    return decimal
 
 
 def BinaryToWord(BinWord):
@@ -80,19 +80,18 @@ def decimalToBinary(num):
     to binary and prints it"""
     if num > 1:
         decimalToBinary(num // 2)
-    #print(num % 2, end='')
-def shift():
-    text = "ATTACK"
-    birep = ''.join(format(ord(char), 'b') for char in text)
-    #print(birep)
+    # print(num % 2, end='')
+
+
+def shift(word):
+    birep = ''.join(format(ord(char), 'b') for char in word)
+    # print(birep)
     decimal = 0
     for digit in birep:
         decimal = decimal * 2 + int(digit)
-    #print(decimal)
-
+    # print(decimal)
     shiftedDecimal = decimal << 2
-    #print(shiftedDecimal)
-    return decimalToBinary(shiftedDecimal)
-
-
-
+    # print(shiftedDecimal)
+    word= decimalToBinary(shiftedDecimal)
+    word= BinaryToWord(word)
+    return word

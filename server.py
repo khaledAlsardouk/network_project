@@ -72,8 +72,9 @@ def check_score(socket1, socket2):
 
 
 choice = 'yes'
+connect(host, port)
 while choice != 'no':
-    connect(host, port)
     game()
     check_score(clients[0], clients[1])
+    clients = []
     choice = input('do you want to restart type no if you want to stop')

@@ -1,3 +1,6 @@
+import defender
+
+
 def calcRedundantBits(m):
     # Use the formula 2 ^ r >= m + r + 1
     # to calculate the no of redundant bits.
@@ -83,4 +86,4 @@ def correction(arr, correction):
             elif new_arr[len(arr) - x] == '0':
                 new_arr[len(arr) - x] = '1'
     correct_arr = "".join(new_arr)
-    return correct_arr
+    return defender.BinaryToWord(correct_arr)

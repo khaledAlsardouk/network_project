@@ -25,8 +25,7 @@ def NRZ(BinWord):
 
 
 def ByteToBinary(word):
-    x = word.decode("ascii")
-    binary_word = ' '.join(format(ord(x), 'b') for x in x)  # converts the word to binary
+    binary_word = ' '.join(format(ord(x), 'b') for x in word)  # converts the word to binary
     Binary_word2 = [""]
     for i in binary_word:
         if i == ' ':
@@ -50,28 +49,15 @@ def BinaryToDecimal(binary):
     return decimal
 
 
-def BinaryToWord(BinWord):
-    str_data = ''
-    for i in range(0, len(BinWord), 7):
-        temp_data = int(BinWord[i:i + 7])
-        decimal_data = BinaryToDecimal(temp_data)
-        str_data = str_data + chr(decimal_data)
-    # print("The Binary value after string conversion is:",str_data) #for testing purposes
-    return str_data
+def BinaryToWord(s):
+    result = ''.join(chr(int(s[i * 8:i * 8 + 8], 2)) for i in range(len(s) // 8))
+    result = result.replace("=", "")
+    return result
 
 
 def WordToBinary(word):
-    binary_word = ' '.join(format(ord(x), 'b') for x in word)  # converts the word to binary
-    Binary_word2 = [""]
-    for i in binary_word:
-        if i == ' ':
-            flip_the_bit = i.replace(" ", "")
-        else:
-            flip_the_bit = i
-        Binary_word2.append(flip_the_bit)
-    y = ''.join(str(j) for j in Binary_word2)
-    # print(y) #for testing purposes
-    return y
+    res = ''.join(format(i, '08b') for i in bytearray(word, encoding='utf-8'))
+    return res
 
 
 # def WordToBinNew(word):
@@ -81,5 +67,3 @@ def decimalToBinary(num):
     if num > 1:
         decimalToBinary(num // 2)
     # print(num % 2, end='')
-
-

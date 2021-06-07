@@ -2,7 +2,7 @@ import socket
 import time
 
 ServerSocket = socket.socket()  # create socket
-host = '127.0.0.1'
+host = '25.92.243.22'
 port = 1234
 
 
@@ -27,7 +27,7 @@ def clients_connection(socket1, socket2):
     data = socket1.recv(1024)  # wait and receive data from the attack max 1024 bytes
     # att_time=time.time()# time for the first attack
     hostname2 = socket1.getpeername()  # get the defender address
-    reply_origin = hostname[0] + ':' + str(hostname[1]) + ' says ' + data.decode('ascii')  # create a reply
+    reply_origin = hostname[0] + ':' + str(hostname[1]) + ' says ' + data.decode('utf-8')  # create a reply
     print(reply_origin)
     socket2.sendall(data)  # send the reply to the defender
     data2 = socket2.recv(1024)  # see if the defence failed or not
@@ -51,7 +51,8 @@ def game():
             clients_connection(clients[0], clients[1])  # go to  game
             clients_connection(clients[1], clients[0])  # simple method to switch turns for now
             clients_connection(clients[0], clients[1])
-            break
+
+
 
 
 def check_score(socket1, socket2):

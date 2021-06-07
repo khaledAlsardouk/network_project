@@ -30,19 +30,18 @@ def detect_errors(message):
     return correct
 
 
-res = ''
+
 
 
 def shift(res):
     text = "ATTACK"
-    birep = ''.join(format(ord(char), 'b') for char in text)
-    res = (birep * 3)[len(birep) + 7 - 3:
-                      2 * len(birep) + 7 - 3]
+    temp = (7- 3) % len(text)
+    res = text[temp:] + text[: temp]
     return res
 
 
 def defenderShift(defres):
-    defres = (res * 3)[len(res) + 3 - 7:
-                       2 * len(res) + 3 - 7]
+    temp = (3 - 7) % len(defres)
+    res = defres[temp:] + defres[: temp]
 
-    return defres
+    return res

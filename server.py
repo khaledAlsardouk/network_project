@@ -2,7 +2,8 @@ import socket
 import time
 
 ServerSocket = socket.socket()  # create socket
-host = '25.92.243.22'
+host = '127.0.0.1'
+#host = '25.75.141.183'
 port = 1234
 
 
@@ -51,6 +52,7 @@ def game():
             clients_connection(clients[0], clients[1])  # go to  game
             clients_connection(clients[1], clients[0])  # simple method to switch turns for now
             clients_connection(clients[0], clients[1])
+            break
 
 
 

@@ -8,7 +8,9 @@ import random
 global threshold
 
 ClientSocket = socket.socket()  # create socket
-host = '25.92.243.22'  # local host ip for now
+host = '127.0.0.1'    # local host ip for now
+#host = '25.75.141.183'   #hamachi
+
 port = 1234
 def_score = 0
 atk_score = 0

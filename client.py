@@ -64,10 +64,8 @@ while connection:
         if choice == 0:
             word = defender.WordToBinary(word)
             word = defender.NRZ(word)
-            print('hello')
 
         else:
-            print('i am here')
             word = attacker.shift(word)
             print(Response)
 
